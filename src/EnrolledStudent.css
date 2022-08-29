@@ -1,0 +1,9 @@
+.row-3 {
+     background-color: rgb(206, 233, 177);
+     margin-left: 0;
+     height: 100px;
+     width: 350px;
+}
+.row-3 .row-2-col-2 {
+     background-color: rgb(156, 165, 208);
+}

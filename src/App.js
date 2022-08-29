@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-
 import "./App.css";
+import EnrolledStudent from "./EnrolledStudent";
 
-
-function App() {
+const App = () => {
 
      const [enterdName, setEnterdName] = useState('')
      const [enterdEmail, setEnterdEmail] = useState('')
@@ -28,6 +27,43 @@ function App() {
      const genderChangeHandler = (gender) => {
           setEnterdGender(gender)
      }
+     console.log(enterdSkill)
+
+     const onJavaChange = (event) => {
+          if (event.target.checked) {
+               setEnterdSkill([...enterdSkill, 'Java'])
+          } else {
+               const index = enterdSkill.indexOf('Java')
+               if (index > -1) {
+                    enterdSkill.splice(index, 1);
+                    setEnterdSkill(enterdSkill)
+               }
+          }
+     }
+
+     const onHtmlChange = (event) => {
+          if (event.target.checked) {
+               setEnterdSkill([...enterdSkill, 'html'])
+          } else {
+               const index = enterdSkill.indexOf('html')
+               if (index > -1) {
+                    enterdSkill.splice(index, 1)
+                    setEnterdSkill(enterdSkill)
+               }
+          }
+     }
+
+     const onCssChange = (event) => {
+          if (event.target.checked) {
+               setEnterdSkill([...enterdSkill, 'css'])
+          } else {
+               const index = enterdSkill.indexOf('css')
+               if (index > -1) {
+                    enterdSkill.splice(index, 1)
+                    setEnterdSkill(enterdSkill)
+               }
+          }
+     }
 
      const clear = (event) => {
           event.preventDefault();
@@ -36,34 +72,9 @@ function App() {
           setEnterdwebsite('')
           setEnterdImage('')
           setEnterdGender('Male')
-          setEnterdSkill([''])
+          setEnterdSkill([])
      }
 
-     const onJavaChange = (event) => {
-          if (event.target.checked && !enterdSkill.includes('Java')) {
-               setEnterdSkill([...enterdSkill, 'Java']);
-          } else if (!event.target.checked && enterdSkill.includes('Java')) {
-               const index = enterdSkill.indexOf('Java');
-               enterdSkill.splice(index, 1);
-               setEnterdSkill(enterdSkill);
-          }
-     }
-     const onHtmlChange = (event) => {
-          if (event.target.checked && !enterdSkill.includes('HTML')) {
-               setEnterdSkill([...enterdSkill, 'HTML']);
-          } else if (!event.target.checked && enterdSkill.includes('HTML')) {
-               enterdSkill.splice(enterdSkill.indexOf('HTML'), 1);
-               enterdSkill(enterdSkill);
-          }
-     }
-     const onCssChange = (event) => {
-          if (event.target.checked && !enterdSkill.includes('CSS')) {
-               setEnterdSkill([...enterdSkill, 'CSS']);
-          } else if (!event.target.checked && enterdSkill.includes('CSS')) {
-               enterdSkill.splice(enterdSkill.indexOf('CSS'), 1);
-               enterdSkill(enterdSkill);
-          }
-     }
 
      const submitHandler = (event) => {
           event.preventDefault();
@@ -78,11 +89,9 @@ function App() {
           }
           setAllDta([...AllData, student])
 
-          // console.log('Current data: ', [...AllData, student])
 
           clear(event);
      }
-
 
      return (
           <form className="main">
@@ -115,8 +124,8 @@ function App() {
                          <br />
                          Skills
                          <input type="checkbox" name="course" value="java" checked={enterdSkill.includes('Java')} onChange={onJavaChange} /> Java
-                         <input type="checkbox" name="course" value="html" checked={enterdSkill.includes('HTML')} onChange={onHtmlChange} /> Html
-                         <input type="checkbox" name="course" value="css" checked={enterdSkill.includes('CSS')} onChange={onCssChange} /> Css
+                         <input type="checkbox" name="course" value="html" checked={enterdSkill.includes('html')} onChange={onHtmlChange} /> Html
+                         <input type="checkbox" name="course" value="css" checked={enterdSkill.includes('css')} onChange={onCssChange} /> Css
                          <br />
                          <br />
                          <button className="enrole-student" onClick={submitHandler}> Enrole Students </button>
@@ -125,58 +134,29 @@ function App() {
 
                     </div>
                     <span> Enrolled Student </span>
-
-
-
                     <div className="div-1">
                          <div className="row-1"> Description
                               <div className="row-1-col-2"> Image</div>
                          </div>
-                         <img src="images(1).png" /> 
 
-                         {/* <div className="row-2">
-                              <div className="row-2-col-2">image </div>
-                              <div> Johan Doe </div>
-                              <div> Male </div>
-                              <div> Johan.doe@emai.com</div>
-                              <div> www.Johandoe.com</div>
-                         </div>
 
-                         <div className="row-3">
-                              <div className="row-2-col-2"> imge</div>
-                              <div> Matt Rolling </div>
-                              <div> Male </div>
-                              <div> www.mattr.com</div>
-                              <div> matt.r@emai.com</div>
-                         </div> */} 
                          {AllData.map((student, index) => {
                               if (index % 2 === 1) {
-                                   return <div className="row-3">
-                                        <div className="row-2-col-2"><img height={100} width={100} src={student.image}/></div>
-                                        <div> {student.name} </div>
-                                        <div> {student.gender} </div>
-                                        <div> {student.website}</div>
-                                        <div> {student.email}</div>
-                                        <div> {student.skills}</div>
-                                   </div>
+                                   return <EnrolledStudent
+                                        class='row-3'
+                                        studentData={student}
+                                   />
                               }
                               else if (index % 2 === 0) {
-                                   return <div className="row-2">
-                                        <div className="row-2-col-2"><img height={100} width={100} src={student.image}/></div>
-                                        <div> {student.name} </div>
-                                        <div> {student.gender} </div>
-                                        <div> {student.website}</div>
-                                        <div> {student.email}</div>
-                                        <div> {student.skills}</div>
-                                   </div>
+                                   return <EnrolledStudent
+                                        class='row-2'
+                                        studentData={student}
+                                   />
                               }
                          })}
                     </div>
-
-
                </div>
           </form>
-
      )
 };
 
